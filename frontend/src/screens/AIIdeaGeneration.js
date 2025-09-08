@@ -62,6 +62,58 @@ const AIIdeaGeneration = () => {
       working_principle: 'Arduino controls addressable LEDs with programmed patterns and sensor inputs',
       innovation_elements: ['Music synchronization', 'Color psychology', 'Energy efficient LEDs'],
       scalability_options: ['Voice control', 'Mobile app control', 'Room-wide installation']
+    },
+    {
+      id: 'idea_4',
+      title: 'Smart Temperature Monitor',
+      description: 'IoT-based temperature monitoring system with alerts and data logging',
+      difficulty: 'Intermediate',
+      availability: 'Available',
+      estimated_cost: '₹800-1100',
+      components: ['ESP32 DevKit', 'Temperature Sensor DS18B20', 'LCD Display 16x2'],
+      problem_statement: 'Monitor and log temperature data for smart environments with real-time alerts',
+      working_principle: 'ESP32 reads temperature data, displays on LCD, and sends to cloud with WiFi',
+      innovation_elements: ['Cloud data logging', 'Mobile app notifications', 'Historical data analysis'],
+      scalability_options: ['Multiple sensor zones', 'Weather station integration', 'Predictive analytics']
+    },
+    {
+      id: 'idea_5',
+      title: 'Motion-Activated Night Light',
+      description: 'Energy-efficient automatic lighting system using motion detection',
+      difficulty: 'Beginner',
+      availability: 'Available',
+      estimated_cost: '₹400-600',
+      components: ['Arduino Uno', 'PIR Motion Sensor', 'LED Strip WS2812B'],
+      problem_statement: 'Create an automatic lighting system that activates only when motion is detected',
+      working_principle: 'PIR sensor detects motion and triggers Arduino to control LED lighting patterns',
+      innovation_elements: ['Motion-based automation', 'Energy conservation', 'Customizable lighting'],
+      scalability_options: ['Smart home integration', 'Daylight sensing', 'Multiple zones']
+    },
+    {
+      id: 'idea_6',
+      title: 'Digital Weather Station',
+      description: 'Comprehensive weather monitoring system with multiple environmental sensors',
+      difficulty: 'Advanced',
+      availability: 'Available',
+      estimated_cost: '₹1200-1800',
+      components: ['ESP32 DevKit', 'Temperature Sensor DS18B20', 'LCD Display 16x2', 'Ultrasonic Sensor HC-SR04'],
+      problem_statement: 'Build a complete weather station that monitors multiple environmental parameters',
+      working_principle: 'Multiple sensors collect data, ESP32 processes and displays on LCD while logging to server',
+      innovation_elements: ['Multi-parameter monitoring', 'Web dashboard', 'Historical trends'],
+      scalability_options: ['Solar power integration', 'Wireless mesh network', 'AI weather prediction']
+    },
+    {
+      id: 'idea_7',
+      title: 'Smart Parking System',
+      description: 'Automated parking space detection and management system',
+      difficulty: 'Intermediate',
+      availability: 'Available',
+      estimated_cost: '₹900-1300',
+      components: ['Arduino Uno', 'Ultrasonic Sensor HC-SR04', 'Servo Motor SG90', 'LCD Display 16x2'],
+      problem_statement: 'Automate parking space detection and provide real-time availability information',
+      working_principle: 'Ultrasonic sensors detect vehicle presence, servo controls barrier, LCD shows status',
+      innovation_elements: ['Real-time availability', 'Mobile app integration', 'Payment system ready'],
+      scalability_options: ['Multi-level parking', 'License plate recognition', 'Booking system']
     }
   ];
 
