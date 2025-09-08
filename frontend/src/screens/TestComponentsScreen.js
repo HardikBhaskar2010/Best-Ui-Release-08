@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, ShoppingCart, Check, Zap, Cpu, Eye, Bluetooth, ArrowRight, Home, Settings, Lightbulb, BookOpen, User } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { addComponent } from '../services/firebaseService';
 
 const TestComponentsScreen = ({ onNavigate }) => {
   const navigate = useNavigate();
