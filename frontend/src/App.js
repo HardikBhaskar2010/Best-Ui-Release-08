@@ -143,6 +143,9 @@ function App() {
               />
             </Routes>
             
+            {/* Debug Panel - Shows system status in development */}
+            <DebugPanel />
+            
             {/* Toast notifications */}
             <Toaster 
               position="top-right"
