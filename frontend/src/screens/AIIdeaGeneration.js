@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, RefreshCw, Heart, Share2, Eye, Bookmark, Lightbulb, Zap, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { saveIdea as saveIdeaToFirebase } from '../services/firebaseService';
 
 const AIIdeaGeneration = () => {
   const navigate = useNavigate();
