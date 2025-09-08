@@ -17,6 +17,10 @@ import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 
 const DebugPanel = () => {
+  // Only show in development mode or when debug param is present
+  const shouldShow = process.env.NODE_ENV === 'development' || 
+                    new URLSearchParams(window.location.search).has('debug');
+  
   const [isExpanded, setIsExpanded] = useState(false);
   const [systemStatus, setSystemStatus] = useState({
     connection: { status: 'checking', message: 'Checking...' },
