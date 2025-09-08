@@ -451,7 +451,11 @@ const TestComponentsScreen = ({ onNavigate }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-8 space-y-4">
+        <ScrollAnimatedComponent
+          animation="fadeInUp"
+          delay={0.8}
+          className="mt-8 space-y-4"
+        >
           {/* Add New Component Button */}
           <div className="text-center">
             <button
@@ -487,7 +491,7 @@ const TestComponentsScreen = ({ onNavigate }) => {
               </div>
             </button>
           </div>
-        </div>
+        </ScrollAnimatedComponent>
 
         {/* Add New Component Modal */}
         {showAddModal && (
