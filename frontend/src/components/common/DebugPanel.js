@@ -249,6 +249,9 @@ const DebugPanel = () => {
     ? 'error' 
     : 'warning';
 
+  // Don't render if not in debug mode
+  if (!shouldShow) return null;
+
   return (
     <div className="fixed top-4 right-4 z-50">
       <motion.div
