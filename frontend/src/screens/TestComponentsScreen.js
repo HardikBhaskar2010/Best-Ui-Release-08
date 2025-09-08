@@ -364,82 +364,88 @@ const TestComponentsScreen = ({ onNavigate }) => {
       </div>
 
       {/* Components Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-6 pb-24">
+      <div className="max-w-7xl mx-auto px-4 py-6 pb-24 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {components.map((component) => {
+          {components.map((component, index) => {
             const Icon = component.icon;
             const isSelected = selectedComponents.some(c => c.id === component.id);
             
             return (
-              <div
+              <ScrollAnimatedComponent
                 key={component.id}
-                className={`bg-gray-800 border border-gray-700 rounded-xl p-5 hover:bg-gray-750 transition-all duration-300 transform hover:scale-105 ${
-                  isSelected ? 'ring-2 ring-blue-500 bg-blue-900/20' : ''
-                }`}
+                animation="slideInUp"
+                delay={index * 0.1}
+                duration={0.6}
               >
-                {/* Component Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-lg bg-gradient-to-r ${component.color} shadow-lg`}>
-                    <Icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-white">₹{component.price}</div>
-                    <div className="text-xs text-gray-400">{component.stock} in stock</div>
-                  </div>
-                </div>
-
-                {/* Component Details */}
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold text-white mb-2 leading-tight">
-                    {component.name}
-                  </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-3">
-                    {component.description}
-                  </p>
-                </div>
-
-                {/* Category and Status */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getCategoryColor(component.category)}`}>
-                    {component.category}
-                  </span>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-green-400 text-xs font-medium">{component.availability}</span>
-                  </div>
-                </div>
-
-                {/* Action Button */}
-                {isSelected ? (
-                  <div className="space-y-2">
-                    <div className="w-full py-3 px-4 rounded-lg bg-green-900/30 text-green-400 border border-green-500/30">
-                      <div className="flex items-center justify-center space-x-2">
-                        <Check className="h-4 w-4" />
-                        <span>Added to Project</span>
-                      </div>
+                <div
+                  className={`bg-gray-800 border border-gray-700 rounded-xl p-5 hover:bg-gray-750 transition-all duration-300 transform hover:scale-105 ${
+                    isSelected ? 'ring-2 ring-blue-500 bg-blue-900/20' : ''
+                  }`}
+                >
+                  {/* Component Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`p-3 rounded-lg bg-gradient-to-r ${component.color} shadow-lg`}>
+                      <Icon className="h-6 w-6 text-white" />
                     </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-white">₹{component.price}</div>
+                      <div className="text-xs text-gray-400">{component.stock} in stock</div>
+                    </div>
+                  </div>
+
+                  {/* Component Details */}
+                  <div className="mb-4">
+                    <h3 className="text-lg font-semibold text-white mb-2 leading-tight">
+                      {component.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                      {component.description}
+                    </p>
+                  </div>
+
+                  {/* Category and Status */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${getCategoryColor(component.category)}`}>
+                      {component.category}
+                    </span>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-green-400 text-xs font-medium">{component.availability}</span>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  {isSelected ? (
+                    <div className="space-y-2">
+                      <div className="w-full py-3 px-4 rounded-lg bg-green-900/30 text-green-400 border border-green-500/30">
+                        <div className="flex items-center justify-center space-x-2">
+                          <Check className="h-4 w-4" />
+                          <span>Added to Project</span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleRemoveFromProject(component)}
+                        className="w-full py-2 px-4 rounded-lg font-medium text-sm bg-red-900/30 text-red-400 border border-red-500/30 hover:bg-red-900/50 transition-all duration-200 active:scale-95"
+                      >
+                        <div className="flex items-center justify-center space-x-2">
+                          <span>×</span>
+                          <span>Remove</span>
+                        </div>
+                      </button>
+                    </div>
+                  ) : (
                     <button
-                      onClick={() => handleRemoveFromProject(component)}
-                      className="w-full py-2 px-4 rounded-lg font-medium text-sm bg-red-900/30 text-red-400 border border-red-500/30 hover:bg-red-900/50 transition-all duration-200 active:scale-95"
+                      onClick={() => handleAddToProject(component)}
+                      className="w-full py-3 px-4 rounded-lg font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white active:scale-95 shadow-lg hover:shadow-blue-500/25 transition-all duration-200"
                     >
                       <div className="flex items-center justify-center space-x-2">
-                        <span>×</span>
-                        <span>Remove</span>
+                        <Plus className="h-4 w-4" />
+                        <span>Add to Project</span>
                       </div>
                     </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => handleAddToProject(component)}
-                    className="w-full py-3 px-4 rounded-lg font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white active:scale-95 shadow-lg hover:shadow-blue-500/25 transition-all duration-200"
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      <Plus className="h-4 w-4" />
-                      <span>Add to Project</span>
-                    </div>
-                  </button>
-                )}
-              </div>
+                  )}
+                </div>
+              </ScrollAnimatedComponent>
             );
           })}
         </div>
