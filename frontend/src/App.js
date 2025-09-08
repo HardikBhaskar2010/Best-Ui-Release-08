@@ -144,8 +144,11 @@ function App() {
               />
             </Routes>
             
-            {/* Debug Panel - Shows system status in development */}
+            {/* Debug Panel - Shows detailed system status in development */}
             <DebugPanel />
+            
+            {/* System Health Indicator - Compact always-visible status */}
+            <SystemHealthIndicator />
             
             {/* Toast notifications */}
             <Toaster 
