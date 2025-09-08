@@ -118,6 +118,39 @@ const TestComponentsScreen = ({ onNavigate }) => {
     setShowAddModal(true);
   };
 
+  // Handle adding new component to Firebase
+  const handleAddComponentToFirebase = async (newComponent) => {
+    try {
+      setLoading(true);
+      toast.loading('Adding component to Firebase...', { id: 'add-component' });
+      
+      // Add to Firebase
+      const savedComponent = await addComponent(newComponent);
+      
+      // Add to local state with proper structure
+      const componentForUI = {
+        ...savedComponent,
+        icon: newComponent.icon,
+        color: newComponent.color,
+        stock: newComponent.stock || 10
+      };
+      
+      setComponents(prev => [...prev, componentForUI]);
+      setShowAddModal(false);
+      
+      toast.success(`${newComponent.name} added to Firebase library! 🎉`, { id: 'add-component' });
+    } catch (error) {
+      console.error('Error adding component to Firebase:', error);
+      toast.error('Failed to add component to Firebase. Added locally instead.', { id: 'add-component' });
+      
+      // Fallback to local storage
+      setComponents(prev => [...prev, newComponent]);
+      setShowAddModal(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Navigation functions
   const handleContinue = () => {
     if (selectedComponents.length === 0) {
