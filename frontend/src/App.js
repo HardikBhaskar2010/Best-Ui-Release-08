@@ -83,94 +83,99 @@ function App() {
   return (
     <ThemeProvider>
       <UserProvider>
-        <div className="App">
-          <Router>
-            <Routes>
-              <Route 
-                path="/" 
-                element={
-                  !hasCompletedOnboarding ? (
-                    <OnboardingFlow onComplete={handleOnboardingComplete} />
-                  ) : (
-                    <Navigate to="/components" replace />
-                  )
-                } 
-              />
-              <Route 
-                path="/components" 
-                element={
-                  <TestComponentsScreen 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-              <Route 
-                path="/components/browser" 
-                element={
-                  <ComponentDatabaseBrowser 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-              <Route 
-                path="/preferences" 
-                element={
-                  <ThemeAndSkillSelection 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-              <Route 
-                path="/generate" 
-                element={
-                  <AIIdeaGeneration 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-              <Route 
-                path="/library" 
-                element={
-                  <IdeasLibrary 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <UserProfile 
-                    onNavigate={handleScreenChange}
-                  />
-                } 
-              />
-            </Routes>
+        <SmoothScrollWrapper>
+          <div className="App relative">
+            {/* Animated Background */}
+            <AnimatedBackground />
             
-            {/* Debug Panel - Shows detailed system status in development */}
-            <DebugPanel />
-            
-            {/* System Health Indicator - Compact always-visible status */}
-            <SystemHealthIndicator />
-            
-            {/* Toast notifications */}
-            <Toaster 
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: '#363636',
-                  color: '#fff',
-                },
-                success: {
-                  duration: 3000,
-                  theme: {
-                    primary: '#4aed88',
+            <Router>
+              <Routes>
+                <Route 
+                  path="/" 
+                  element={
+                    !hasCompletedOnboarding ? (
+                      <OnboardingFlow onComplete={handleOnboardingComplete} />
+                    ) : (
+                      <Navigate to="/components" replace />
+                    )
+                  } 
+                />
+                <Route 
+                  path="/components" 
+                  element={
+                    <TestComponentsScreen 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+                <Route 
+                  path="/components/browser" 
+                  element={
+                    <ComponentDatabaseBrowser 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+                <Route 
+                  path="/preferences" 
+                  element={
+                    <ThemeAndSkillSelection 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+                <Route 
+                  path="/generate" 
+                  element={
+                    <AIIdeaGeneration 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+                <Route 
+                  path="/library" 
+                  element={
+                    <IdeasLibrary 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <UserProfile 
+                      onNavigate={handleScreenChange}
+                    />
+                  } 
+                />
+              </Routes>
+              
+              {/* Debug Panel - Shows detailed system status in development */}
+              <DebugPanel />
+              
+              {/* System Health Indicator - Compact always-visible status */}
+              <SystemHealthIndicator />
+              
+              {/* Toast notifications */}
+              <Toaster 
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: '#363636',
+                    color: '#fff',
                   },
-                },
-              }}
-            />
-          </Router>
-        </div>
+                  success: {
+                    duration: 3000,
+                    theme: {
+                      primary: '#4aed88',
+                    },
+                  },
+                }}
+              />
+            </Router>
+          </div>
+        </SmoothScrollWrapper>
       </UserProvider>
     </ThemeProvider>
   );
