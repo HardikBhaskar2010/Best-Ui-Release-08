@@ -365,11 +365,7 @@ const TestComponentsScreen = ({ onNavigate }) => {
         {showAddModal && (
           <AddComponentModal 
             onClose={() => setShowAddModal(false)}
-            onAdd={(newComponent) => {
-              setComponents([...components, newComponent]);
-              setShowAddModal(false);
-              toast.success(`${newComponent.name} added to library! 🎉`);
-            }}
+            onAdd={handleAddComponentToFirebase}
           />
         )}
       </div>
