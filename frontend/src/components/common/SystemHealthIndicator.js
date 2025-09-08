@@ -77,9 +77,8 @@ const SystemHealthIndicator = () => {
     }
   };
 
-  // Only show in development or with debug param
-  const shouldShow = process.env.NODE_ENV === 'development' || 
-                    new URLSearchParams(window.location.search).has('debug');
+  // Only show when debug mode is enabled
+  const shouldShow = isDebugMode();
   
   if (!shouldShow) return null;
 
