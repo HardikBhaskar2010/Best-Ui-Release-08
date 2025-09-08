@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { isDebugMode } from '../../utils/debugMode';
 import { CheckCircle, XCircle, AlertCircle, Activity } from 'lucide-react';
 
 // Compact system health indicator for always-visible status
