@@ -205,8 +205,21 @@ const DebugPanel = () => {
     // Re-run tests every 30 seconds
     const interval = setInterval(runSystemTests, 30000);
     
-    return () => clearInterval(interval);
-  }, []);
+    // Add keyboard shortcut (Ctrl/Cmd + D) to toggle debug panel
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+        e.preventDefault();
+        setIsExpanded(!isExpanded);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isExpanded]);
 
   const getStatusIcon = (status) => {
     switch (status) {
