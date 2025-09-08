@@ -104,22 +104,42 @@ const AIIdeaGeneration = () => {
 
   const saveIdea = async (idea) => {
     try {
-      // Simulate save to localStorage
+      toast.loading('Saving idea to library...', { id: 'save-idea' });
+      
+      const ideaToSave = {
+        ...idea,
+        savedAt: new Date().toISOString(),
+        components: idea.components || selectedComponents.map(comp => comp.name),
+        is_favorite: false,
+        tags: [idea.difficulty, 'Generated'],
+        estimated_cost: idea.estimated_cost || 'N/A'
+      };
+      
+      // Save to Firebase
+      const savedIdea = await saveIdeaToFirebase(ideaToSave);
+      
+      // Also save to localStorage as backup
+      const savedIdeasList = JSON.parse(localStorage.getItem('savedIdeas') || '[]');
+      savedIdeasList.push(savedIdea);
+      localStorage.setItem('savedIdeas', JSON.stringify(savedIdeasList));
+      
+      setSavedIdeas(prev => new Set([...prev, idea.id]));
+      toast.success('Idea saved to your Firebase library! 🎉', { id: 'save-idea' });
+    } catch (error) {
+      toast.error('Failed to save to Firebase. Saved locally instead.', { id: 'save-idea' });
+      console.error('Save idea error:', error);
+      
+      // Fallback to localStorage only
       const savedIdeasList = JSON.parse(localStorage.getItem('savedIdeas') || '[]');
       const ideaToSave = {
         ...idea,
         savedAt: new Date().toISOString(),
         components: idea.components || selectedComponents.map(comp => comp.name)
       };
-      
       savedIdeasList.push(ideaToSave);
       localStorage.setItem('savedIdeas', JSON.stringify(savedIdeasList));
       
       setSavedIdeas(prev => new Set([...prev, idea.id]));
-      toast.success('Idea saved to your library!');
-    } catch (error) {
-      toast.error('Failed to save idea');
-      console.error('Save idea error:', error);
     }
   };
 
