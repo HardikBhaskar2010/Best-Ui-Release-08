@@ -127,21 +127,50 @@ const TestComponentsScreen = ({ onNavigate }) => {
   ];
 
   useEffect(() => {
-    // Load selected components from localStorage
-    const savedComponents = localStorage.getItem('selectedComponents');
-    if (savedComponents) {
-      setSelectedComponents(JSON.parse(savedComponents));
-    }
+    // Initialize components state properly - FIX for the 4 components issue
+    const initializeComponents = async () => {
+      try {
+        // Clear any stale localStorage data first
+        const savedComponents = localStorage.getItem('selectedComponents');
+        
+        // Only load if it's valid JSON and not corrupted
+        if (savedComponents) {
+          try {
+            const parsedComponents = JSON.parse(savedComponents);
+            // Validate that it's an array and all items have required properties
+            if (Array.isArray(parsedComponents) && 
+                parsedComponents.every(comp => comp.id && comp.name)) {
+              setSelectedComponents(parsedComponents);
+            } else {
+              // Clear corrupted data
+              localStorage.removeItem('selectedComponents');
+              setSelectedComponents([]);
+            }
+          } catch (parseError) {
+            console.warn('Corrupted selectedComponents data, clearing...', parseError);
+            localStorage.removeItem('selectedComponents');
+            setSelectedComponents([]);
+          }
+        } else {
+          // Ensure empty array initialization
+          setSelectedComponents([]);
+        }
 
-    // Simulate loading components with proper cleanup
-    const timer = setTimeout(() => {
-      setComponents(sampleComponents);
-      setLoading(false);
-    }, 800);
+        // Load sample components with delay for UX
+        setTimeout(() => {
+          setComponents(sampleComponents);
+          setLoading(false);
+        }, 800);
 
-    // Cleanup function to prevent memory leaks
-    return () => clearTimeout(timer);
-  }, []);
+      } catch (error) {
+        console.error('Error initializing components:', error);
+        setError('Failed to load components');
+        setLoading(false);
+      }
+    };
+
+    initializeComponents();
+  }, []); // Empty dependency array to prevent re-initialization
 
   // Handle adding component to project
   const handleAddToProject = (component) => {
@@ -154,7 +183,14 @@ const TestComponentsScreen = ({ onNavigate }) => {
 
     const updatedComponents = [...selectedComponents, component];
     setSelectedComponents(updatedComponents);
-    localStorage.setItem('selectedComponents', JSON.stringify(updatedComponents));
+    
+    // Save to localStorage with error handling
+    try {
+      localStorage.setItem('selectedComponents', JSON.stringify(updatedComponents));
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error);
+      toast.error('Failed to save selection');
+    }
     
     toast.success(`${component.name} added to project! 🎉`);
   };
@@ -163,7 +199,13 @@ const TestComponentsScreen = ({ onNavigate }) => {
   const handleRemoveFromProject = (component) => {
     const updatedComponents = selectedComponents.filter(c => c.id !== component.id);
     setSelectedComponents(updatedComponents);
-    localStorage.setItem('selectedComponents', JSON.stringify(updatedComponents));
+    
+    // Save to localStorage with error handling
+    try {
+      localStorage.setItem('selectedComponents', JSON.stringify(updatedComponents));
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error);
+    }
     
     toast.success(`${component.name} removed from project!`);
   };
@@ -232,6 +274,13 @@ const TestComponentsScreen = ({ onNavigate }) => {
     navigate(screen);
   };
 
+  // Clear all selections function
+  const handleClearAll = () => {
+    setSelectedComponents([]);
+    localStorage.removeItem('selectedComponents');
+    toast.success('All selections cleared!');
+  };
+
   // Get category color
   const getCategoryColor = (category) => {
     const colors = {
@@ -239,7 +288,8 @@ const TestComponentsScreen = ({ onNavigate }) => {
       'Motors': 'bg-orange-900/20 text-orange-300 border-orange-500/30',
       'Sensors': 'bg-green-900/20 text-green-300 border-green-500/30',
       'Display': 'bg-purple-900/20 text-purple-300 border-purple-500/30',
-      'Cables': 'bg-gray-900/20 text-gray-300 border-gray-500/30'
+      'Prototyping': 'bg-gray-900/20 text-gray-300 border-gray-500/30',
+      'Cables': 'bg-red-900/20 text-red-300 border-red-500/30'
     };
     return colors[category] || 'bg-gray-900/20 text-gray-300 border-gray-500/30';
   };
@@ -263,6 +313,12 @@ const TestComponentsScreen = ({ onNavigate }) => {
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
             <p className="text-red-400 text-lg font-medium">Error loading components</p>
             <p className="text-gray-400 mt-2">{error}</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
+              Retry
+            </button>
           </div>
         </div>
       </div>
@@ -279,9 +335,19 @@ const TestComponentsScreen = ({ onNavigate }) => {
               <h1 className="text-2xl md:text-3xl font-bold text-white">Electronic Components</h1>
               <p className="text-gray-400 mt-1">Build your next amazing project</p>
             </div>
-            <div className="flex items-center space-x-2 bg-gray-700 px-3 py-2 rounded-lg">
-              <ShoppingCart className="h-5 w-5 text-blue-400" />
-              <span className="text-white font-medium">{selectedComponents.length}</span>
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 bg-gray-700 px-3 py-2 rounded-lg">
+                <ShoppingCart className="h-5 w-5 text-blue-400" />
+                <span className="text-white font-medium">{selectedComponents.length}</span>
+              </div>
+              {selectedComponents.length > 0 && (
+                <button
+                  onClick={handleClearAll}
+                  className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
+                >
+                  Clear All
+                </button>
+              )}
             </div>
           </div>
           
@@ -486,8 +552,8 @@ const AddComponentModal = ({ onClose, onAdd }) => {
     stock: ''
   });
 
-  const categories = ['Microcontrollers', 'Motors', 'Sensors', 'Display', 'Cables', 'Power', 'Tools'];
-  const icons = [Cpu, Zap, Eye, Zap, Cpu, Zap, Cpu];
+  const categories = ['Microcontrollers', 'Motors', 'Sensors', 'Display', 'Cables', 'Power', 'Tools', 'Prototyping'];
+  const icons = [Cpu, Zap, Eye, Zap, Cpu, Zap, Cpu, Cpu];
   const colors = [
     'from-blue-600 to-purple-600',
     'from-orange-500 to-red-500', 
@@ -495,7 +561,8 @@ const AddComponentModal = ({ onClose, onAdd }) => {
     'from-pink-500 to-rose-500',
     'from-gray-500 to-gray-600',
     'from-yellow-500 to-orange-500',
-    'from-indigo-500 to-blue-600'
+    'from-indigo-500 to-blue-600',
+    'from-gray-500 to-gray-600'
   ];
 
   const handleSubmit = (e) => {
