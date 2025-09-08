@@ -327,38 +327,42 @@ const TestComponentsScreen = ({ onNavigate }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 relative">
       {/* Header Section */}
-      <div className="bg-gray-800 border-b border-gray-700">
+      <div className="bg-gray-800 border-b border-gray-700 relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">Electronic Components</h1>
-              <p className="text-gray-400 mt-1">Build your next amazing project</p>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2 bg-gray-700 px-3 py-2 rounded-lg">
-                <ShoppingCart className="h-5 w-5 text-blue-400" />
-                <span className="text-white font-medium">{selectedComponents.length}</span>
+          <ScrollAnimatedComponent animation="fadeInDown" delay={0.1}>
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold text-white">Electronic Components</h1>
+                <p className="text-gray-400 mt-1">Build your next amazing project</p>
               </div>
-              {selectedComponents.length > 0 && (
-                <button
-                  onClick={handleClearAll}
-                  className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
-                >
-                  Clear All
-                </button>
-              )}
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 bg-gray-700 px-3 py-2 rounded-lg">
+                  <ShoppingCart className="h-5 w-5 text-blue-400" />
+                  <span className="text-white font-medium">{selectedComponents.length}</span>
+                </div>
+                {selectedComponents.length > 0 && (
+                  <button
+                    onClick={handleClearAll}
+                    className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
+                  >
+                    Clear All
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
+          </ScrollAnimatedComponent>
           
           {/* Selected Components Counter */}
           {selectedComponents.length > 0 && (
-            <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-3">
-              <p className="text-blue-300 text-sm">
-                ✨ {selectedComponents.length} component{selectedComponents.length > 1 ? 's' : ''} selected for your project
-              </p>
-            </div>
+            <ScrollAnimatedComponent animation="slideInUp" delay={0.3}>
+              <div className="bg-blue-900/30 border border-blue-500/30 rounded-lg p-3">
+                <p className="text-blue-300 text-sm">
+                  ✨ {selectedComponents.length} component{selectedComponents.length > 1 ? 's' : ''} selected for your project
+                </p>
+              </div>
+            </ScrollAnimatedComponent>
           )}
         </div>
       </div>
