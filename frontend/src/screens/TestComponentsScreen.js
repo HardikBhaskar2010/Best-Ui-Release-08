@@ -3,6 +3,7 @@ import { Plus, ShoppingCart, Check, Zap, Cpu, Eye, Bluetooth, ArrowRight, Home, 
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { addComponent } from '../services/firebaseService';
+import ScrollAnimatedComponent from '../components/ScrollAnimatedComponent';
 
 const TestComponentsScreen = ({ onNavigate }) => {
   const navigate = useNavigate();
