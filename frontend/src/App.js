@@ -19,6 +19,9 @@ import UserProfile from './screens/UserProfile';
 // Services
 import { apiService } from './services/apiService';
 
+// Components
+import DebugPanel from './components/common/DebugPanel';
+
 // Import styles
 import './index.css';
 
