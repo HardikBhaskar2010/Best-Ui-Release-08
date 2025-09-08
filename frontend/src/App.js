@@ -21,6 +21,7 @@ import { apiService } from './services/apiService';
 
 // Components
 import DebugPanel from './components/common/DebugPanel';
+import SystemHealthIndicator from './components/common/SystemHealthIndicator';
 
 // Import styles
 import './index.css';
