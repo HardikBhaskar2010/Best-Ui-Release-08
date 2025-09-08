@@ -22,6 +22,8 @@ import { apiService } from './services/apiService';
 // Components
 import DebugPanel from './components/common/DebugPanel';
 import SystemHealthIndicator from './components/common/SystemHealthIndicator';
+import SmoothScrollWrapper from './components/SmoothScrollWrapper';
+import AnimatedBackground from './components/AnimatedBackground';
 
 // Import styles
 import './index.css';
