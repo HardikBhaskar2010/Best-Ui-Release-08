@@ -131,8 +131,8 @@ const TestComponentsScreen = ({ onNavigate }) => {
       
       toast.success(`Proceeding with ${selectedComponents.length} component${selectedComponents.length > 1 ? 's' : ''}!`);
       
-      // Navigate to generate screen
-      navigate('/generate');
+      // Navigate to Profile Selector first (as per user requirements)
+      navigate('/preferences');
     } catch (error) {
       console.error('Navigation error:', error);
       toast.error('Unable to navigate. Please try again.');
