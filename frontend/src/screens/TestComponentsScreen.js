@@ -68,6 +68,61 @@ const TestComponentsScreen = ({ onNavigate }) => {
       icon: Bluetooth,
       color: "from-indigo-500 to-blue-600",
       stock: 10
+    },
+    {
+      id: "comp_6",
+      name: "PIR Motion Sensor",
+      category: "Sensors",
+      description: "Passive infrared sensor for motion detection",
+      price: 80.0,
+      availability: "Available",
+      icon: Eye,
+      color: "from-yellow-500 to-orange-500",
+      stock: 15
+    },
+    {
+      id: "comp_7",
+      name: "LCD Display 16x2",
+      category: "Display",
+      description: "Character display for showing text and numbers",
+      price: 200.0,
+      availability: "Available",
+      icon: Eye,
+      color: "from-teal-500 to-cyan-500",
+      stock: 8
+    },
+    {
+      id: "comp_8",
+      name: "Breadboard 830 Points",
+      category: "Prototyping",
+      description: "Half-size breadboard for circuit prototyping",
+      price: 100.0,
+      availability: "Available",
+      icon: Cpu,
+      color: "from-gray-500 to-gray-600",
+      stock: 20
+    },
+    {
+      id: "comp_9",
+      name: "Jumper Wires (40pcs)",
+      category: "Cables",
+      description: "Male to male jumper wires for connections",
+      price: 50.0,
+      availability: "Available",
+      icon: Zap,
+      color: "from-red-500 to-pink-500",
+      stock: 25
+    },
+    {
+      id: "comp_10",
+      name: "Temperature Sensor DS18B20",
+      category: "Sensors",
+      description: "Digital temperature sensor with 1-wire interface",
+      price: 90.0,
+      availability: "Available",
+      icon: Eye,
+      color: "from-emerald-500 to-green-500",
+      stock: 12
     }
   ];
 
